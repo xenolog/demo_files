@@ -341,6 +341,15 @@ network_scheme:
     br-storage:
       IP:
       - 192.168.1.2/24
+    br-net1:
+      IP:
+      - 192.168.11.1/24
+    br-net2:
+      IP:
+      - 192.168.12.1/24
+    br-net3:
+      IP:
+      - 192.168.13.1/24
   interfaces:
     eth0: {}
     eth1: {}
@@ -379,8 +388,8 @@ network_scheme:
     public/vip: br-ex
     sahara/api: br-mgmt
     storage: br-storage
-    swift/api: br-storage
-    swift/replication: br-storage
+    swift/api: br-net1
+    swift/replication: br-net2
   transformations:
   - action: add-br
     name: br-fw-admin
@@ -416,6 +425,21 @@ network_scheme:
   - action: add-port
     bridge: br-ex
     name: eth1
+  - action: add-br
+    name: br-net1
+  - action: add-br
+    name: br-net2
+  - action: add-br
+    name: br-net3
+  - action: add-port
+    bridge: br-net1
+    name: eth0.201
+  - action: add-port
+    bridge: br-net2
+    name: eth0.202
+  - action: add-port
+    bridge: br-net3
+    name: eth0.203
   version: '1.1'
 neutron_mellanox:
   metadata:
